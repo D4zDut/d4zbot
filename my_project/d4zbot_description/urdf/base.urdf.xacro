@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="d4zbot_base">
+
+    <xacro:macro name="d4zbot_base">
+
+        <!-- BASE FOOTPRINT -->
+        <link name="base_footprint"/>
+        
+        <joint name="base_footprint_joint" type="fixed">
+            <origin xyz="0 0 0.2" rpy="0 0 0" />
+            <parent link="base_footprint" />
+            <child link="base_link" />
+        </joint>
+
+        <!-- BASE LINK -->
+        <link name="base_link">
+            <visual>
+                <origin xyz="0 0 0" rpy="0 0 0" />
+                <geometry>
+                    <mesh filename="package://d4zbot_description/meshes/base_link.STL" />
+                </geometry>
+                <material name="light_grey"/>
+            </visual>
+            <collision>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+                <geometry>
+                    <box size="0.75 0.4 0.3"/>
+                </geometry>
+            </collision>
+        </link>
+
+        <!-- INERTIAL LINK -->
+        <link name="inertial_link">
+            <inertial>
+                <mass value="7.0" />
+                <origin xyz="0 0 0" />
+                <inertia ixx="0.6022" ixy="-0.02364" ixz="-0.1197" iyy="1.7386" iyz="-0.001544" izz="2.0296" />
+            </inertial>
+        </link>
+
+        <!-- INERTIAL JOINT -->
+        <joint name="inertial_joint" type="fixed">
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <parent link="base_link" />
+            <child link="inertial_link" />
+        </joint>
+
+        <!-- GAZEBO -->
+        <gazebo reference="base_link">
+            <mu1 value="1.0"/>
+			<mu2 value="1.0"/>
+			<kp value="10000000.0" />
+			<kd value="1.0" />
+			<fdir1 value="1 0 0"/>
+            <material>
+                Gazebo/Green
+            </material>
+            <turnGavityOff>false</turnGavityOff>
+        </gazebo>
+        
+    </xacro:macro>    
+</robot>
